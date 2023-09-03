@@ -1,0 +1,12 @@
+{
+  "books": [
+    {
+      "title": "Harry Potter",
+      "id": 1
+    },
+    {
+      "title": "A Ghost in the Machine: Midsomer Murders, Book 7",
+      "id": 2
+    }
+  ]
+}
