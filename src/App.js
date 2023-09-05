@@ -1,15 +1,26 @@
-import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import BookList from "./components/BookList";
 import BookCreate from "./components/BookCreate";
-import axios from "axios";
-import axiosRetry from "axios-retry";
+import {fetchBooks, getBooksError, getBooksStatus, selectAllBooks} from "./features/book/bookSlice";
+import {useEffect} from "react";
+
 
 
 
 function App() {
+    const dispatch = useDispatch();
+    const books = useSelector(selectAllBooks);
+    const bookStatus = useSelector(getBooksStatus);
+    const error = useSelector(getBooksError);
+
+    useEffect(() => {
+        if (bookStatus === 'idle') {
+            dispatch(fetchBooks());
+        }
+    }, [bookStatus, dispatch]);
+    /*
   const [books, setBooks] = useState([]);
   const [bookFetchError, setBookFetchError] = useState(null)
-
   function convertEpochToSpecificTimezone(timeEpoch, offset){
     var d = new Date(timeEpoch);
     var utc = d.getTime() + (d.getTimezoneOffset() * 60000);  //This converts to UTC 00:00
@@ -93,18 +104,21 @@ function App() {
     // setBooks(newBookList)
   }
 
+ */
+    let bookListContent = '';
+    if (bookStatus === 'loading') {
+        bookListContent = <h2>Loading...</h2>
+    } else if (bookStatus === 'succeeded') {
+        bookListContent = <BookList books={books}/>
+    } else if (bookStatus === 'failed') {
+        bookListContent = <p>{error}</p>;
+    }
+
   return (
       <div className="app">
         <h1>Reading List</h1>
-        {bookFetchError ? <div className={"text-danger"}><pre>{bookFetchError}</pre></div> :
-            <BookList
-                books={books}
-                onDelete={deleteBookById}
-                onUpdateTitle={updateTitle}
-                uploadImageHandler={uploadImageHandler}
-            />
-        }
-        <BookCreate onCreate={createBook}/>
+          {bookListContent}
+        <BookCreate />
       </div>
   )
 }

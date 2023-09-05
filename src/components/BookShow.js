@@ -3,7 +3,7 @@ import {useState} from "react";
 import BookEdit from "./BoookEdit";
 import bookImage from '../images/book.png'
 import Button from "react-bootstrap/Button";
-import {Modal} from "react-bootstrap";
+import {Card, Modal} from "react-bootstrap";
 
 const BookShow = ({book, onDelete, onUpdateTitle, uploadImageHandler}) => {
   const [editing, setEditing] = useState(false)
@@ -57,8 +57,9 @@ const BookShow = ({book, onDelete, onUpdateTitle, uploadImageHandler}) => {
   }
 
   return (
-      <div className="book-show">
-        <span style={{position: "absolute", top: "10px", right: "10px"}}>
+      <Card style={{ width: '16rem'}} className="book-show" >
+
+        <span style={{position: "absolute", top: "2px", right: "2px"}}>
           {editing ?
               <FaPencilAlt color="grey"/> :
               <a href="" onClick={handleEditClicked}>
@@ -69,16 +70,17 @@ const BookShow = ({book, onDelete, onUpdateTitle, uploadImageHandler}) => {
            <FaTrash/>
           </a>
         </span>
+
         <br/>
         <a href="" onClick={handleImageClick}>
-          <img src={book.image_file_name
+          <Card.Img src={book.image_file_name
               ? `http://localhost:8081/books/image/${book.image_file_name}`
               : bookImage}
          />
         </a>
         {editing ? <BookEdit titleUpdated={titleUpdated}
                              title={book.title}
-                             setEditing={setEditing}/> : <h3>{book.title}</h3>}
+                             setEditing={setEditing} id = {book.id}/> : <Card.Title>{book.title}</Card.Title>}
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Upload Book Image</Modal.Title>
@@ -100,7 +102,7 @@ const BookShow = ({book, onDelete, onUpdateTitle, uploadImageHandler}) => {
           </Modal.Footer>
         </Modal>
 
-      </div>
+      </Card>
   )
 }
 
