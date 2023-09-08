@@ -7,8 +7,7 @@ const BookEdit = ({id, title, setEditing}) => {
     const [newTitle, setNewTitle] = useState(title)
 
     const dispatch = useDispatch();
-
-
+    
     const handleChange = (ev) => {
         setNewTitle(ev.target.value)
     }

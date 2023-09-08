@@ -1,7 +1,11 @@
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {createBook} from "../features/book/bookSlice";
 
-const BookCreate = ({onCreate}) => {
+const BookCreate = () => {
   const [title, setTitle] = useState('');
+
+  const dispatch = useDispatch();
   
   const handleChange = (ev) => {
     setTitle(ev.target.value)
@@ -9,8 +13,15 @@ const BookCreate = ({onCreate}) => {
   
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onCreate(title);
-    setTitle('')
+    dispatch(createBook(title))
+    .unwrap()
+    .then(response => {
+      console.log(response);
+      setTitle('')
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
   return (
       <div className={"book-create"}>

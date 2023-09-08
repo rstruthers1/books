@@ -4,13 +4,32 @@ const getAll = () => {
     return http.get("/books");
 };
 
+const create = title => {
+    return http.post("/books", {title});
+};
+
+const remove = id => {
+    return http.delete(`/books/${id}`);
+};
+
 const update = (id, title) => {
     return http.put(`/books/${id}`, {title: title});
 };
 
+const uploadImage = (id, imageFormData) => {
+    return http.post(`/books/${id}/image`, imageFormData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
+
 const BookService = {
     getAll,
-    update
+    create,
+    remove,
+    update,
+    uploadImage
 };
 
 export default BookService;

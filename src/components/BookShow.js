@@ -4,20 +4,24 @@ import BookEdit from "./BoookEdit";
 import bookImage from '../images/book.png'
 import Button from "react-bootstrap/Button";
 import {Card, Modal} from "react-bootstrap";
+import {useDispatch} from "react-redux";
+import {deleteBook, uploadBookImage} from "../features/book/bookSlice";
 
-const BookShow = ({book, onDelete, onUpdateTitle, uploadImageHandler}) => {
+const BookShow = ({book}) => {
   const [editing, setEditing] = useState(false)
   const [show, setShow] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState(book.image_file_name
-      ? `http://localhost:8081/books/image/${book.image_file_name}` : bookImage)
+      ? `${process.env.REACT_APP_BASE_API_URL}/books/image/${book.image_file_name}` : bookImage)
   const [imageFormData, setImageFormData] = useState(null)
+
+  const dispatch = useDispatch();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleDeleteClicked = (ev) => {
     ev.preventDefault()
-    onDelete(book.id)
+    dispatch(deleteBook(book.id))
   }
 
   const handleEditClicked = (ev) => {
@@ -25,17 +29,11 @@ const BookShow = ({book, onDelete, onUpdateTitle, uploadImageHandler}) => {
     setEditing(true)
   }
 
-  const titleUpdated = (newBookTitle) => {
-    console.log(`set book title to ${newBookTitle}`)
-    onUpdateTitle(book.id, newBookTitle)
-    setEditing(false)
-  }
-
   const handleImageClick = (ev) => {
     ev.preventDefault()
     setImageFormData(null)
     setModalImageSrc(book.image_file_name
-        ? `http://localhost:8081/books/image/${book.image_file_name}` : bookImage)
+        ? `${process.env.REACT_APP_BASE_API_URL}/books/image/${book.image_file_name}` : bookImage)
     handleShow()
   }
 
@@ -43,44 +41,42 @@ const BookShow = ({book, onDelete, onUpdateTitle, uploadImageHandler}) => {
     const formData = new FormData();
     formData.append("file", ev.target.files[0]);
     setImageFormData(formData)
-    console.log(ev.target.files[0])
     const newBookImage = URL.createObjectURL(ev.target.files[0])
-    console.log(newBookImage)
     setModalImageSrc(newBookImage)
   }
 
-  const handleImageUpload = (ev) => {
+  const handleImageUpload = () => {
     handleClose()
     if (imageFormData) {
-      uploadImageHandler(book.id, imageFormData)
+      dispatch(uploadBookImage({id: book.id, imageFormData}) )
     }
   }
 
   return (
       <Card style={{ width: '16rem'}} className="book-show" >
-
         <span style={{position: "absolute", top: "2px", right: "2px"}}>
           {editing ?
               <FaPencilAlt color="grey"/> :
               <a href="" onClick={handleEditClicked}>
                 <FaPencilAlt/>
               </a>}
-
           <a href="" onClick={handleDeleteClicked} style={{marginLeft: "5px"}}>
            <FaTrash/>
           </a>
         </span>
-
         <br/>
         <a href="" onClick={handleImageClick}>
           <Card.Img src={book.image_file_name
-              ? `http://localhost:8081/books/image/${book.image_file_name}`
+              ? `${process.env.REACT_APP_BASE_API_URL}/books/image/${book.image_file_name}`
               : bookImage}
          />
         </a>
-        {editing ? <BookEdit titleUpdated={titleUpdated}
-                             title={book.title}
-                             setEditing={setEditing} id = {book.id}/> : <Card.Title>{book.title}</Card.Title>}
+        
+        {editing ? <BookEdit 
+            title={book.title}
+            setEditing={setEditing} 
+            id = {book.id}/> : <Card.Title>{book.title}</Card.Title>}
+        
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Upload Book Image</Modal.Title>
