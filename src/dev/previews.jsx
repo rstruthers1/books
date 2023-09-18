@@ -1,10 +1,10 @@
 import React from 'react';
 import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox';
 import {PaletteTree} from './palette';
-import BookCreate from "../components/BookCreate";
-import BookEdit from "../components/BoookEdit";
-import BookShow from "../components/BookShow";
-import BookList from "../components/BookList";
+import BookCreate from "../components/book/BookCreate";
+import BookEdit from "../components/book/BoookEdit";
+import BookShow from "../components/book/BookShow";
+import BookList from "../components/book/BookList";
 import App from "../App";
 
 const ComponentPreviews = () => {

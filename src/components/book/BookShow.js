@@ -1,11 +1,11 @@
 import {FaTrash, FaPencilAlt} from "react-icons/fa";
 import {useState} from "react";
 import BookEdit from "./BoookEdit";
-import bookImage from '../images/book.png'
+import bookImage from '../../images/book.png'
 import Button from "react-bootstrap/Button";
 import {Card, Modal} from "react-bootstrap";
 import {useDispatch} from "react-redux";
-import {deleteBook, uploadBookImage} from "../features/book/bookSlice";
+import {deleteBook, uploadBookImage} from "../../features/book/bookSlice";
 
 const BookShow = ({book}) => {
   const [editing, setEditing] = useState(false)
@@ -57,15 +57,15 @@ const BookShow = ({book}) => {
         <span style={{position: "absolute", top: "2px", right: "2px"}}>
           {editing ?
               <FaPencilAlt color="grey"/> :
-              <a href="" onClick={handleEditClicked}>
+              <a href="src/components/book/BookShow" onClick={handleEditClicked}>
                 <FaPencilAlt/>
               </a>}
-          <a href="" onClick={handleDeleteClicked} style={{marginLeft: "5px"}}>
+          <a href="src/components/book/BookShow" onClick={handleDeleteClicked} style={{marginLeft: "5px"}}>
            <FaTrash/>
           </a>
         </span>
         <br/>
-        <a href="" onClick={handleImageClick}>
+        <a href="src/components/book/BookShow" onClick={handleImageClick}>
           <Card.Img src={book.image_file_name
               ? `${process.env.REACT_APP_BASE_API_URL}/books/image/${book.image_file_name}`
               : bookImage}

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import {useDispatch} from "react-redux";
-import {updateBook} from "../features/book/bookSlice";
+import {updateBook} from "../../features/book/bookSlice";
 
 const BookEdit = ({id, title, setEditing}) => {
     const [newTitle, setNewTitle] = useState(title)

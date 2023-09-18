@@ -1,24 +1,45 @@
 import './index.css'
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import {DevSupport} from "@react-buddy/ide-toolbox";
-import {ComponentPreviews, useInitial} from "./dev";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Provider} from "react-redux";
 import store from "./app/store";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Root from "./routes/root";
+import ErrorPage from "./error-page";
+import BookInventory from "./components/book/BookInventory";
+import AlbumInventory from "./components/album/AlbumInventory";
+import BookCreate from "./components/book/BookCreate";
 
 
-const el = document.getElementById('root');
-const root = ReactDOM.createRoot(el);
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root/>,
+        errorElement: <ErrorPage/>,
 
-root.render(<DevSupport
-    ComponentPreviews={ComponentPreviews}
-    useInitialHook={useInitial}
->
-<Provider store={store}>
-    <App/>
-</Provider>
+        children: [
+            {
+                path: "books",
+                element: <BookInventory/>,
+            },
+            {
+                path: "books/create",
+                element: <BookCreate/>,
+            },
+            {
+                path: "albums",
+                element: <AlbumInventory/>,
+            },
+        ]
+    }
+]);
 
-</DevSupport>)
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+        <Provider store={store}>
+        <RouterProvider router={router} />
+        </Provider>
+    </React.StrictMode>
+);
 
