@@ -1,8 +1,8 @@
-import {Col, Container, Row, Spinner} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import {useGetAlbumsQuery} from "../../services/jsonServerApi";
 import AlbumList from "./AlbumList";
-import ErrorPage from "../../error-page";
 import LoadingSpinner from "../LoadingSpinner";
+import ErrorPage from "../ErrorPage";
 
 function AlbumInventory() {
 
@@ -14,24 +14,21 @@ function AlbumInventory() {
         error
     } = useGetAlbumsQuery();
 
+
+    let albumListContent;
     if (isLoading || isFetching) {
-        return <Container>
-           <LoadingSpinner/>
-            </Container>
-
+        albumListContent = <LoadingSpinner/>
+    } else if (isError) {
+        albumListContent = <ErrorPage errorMessage={JSON.stringify(error)}/>
+    } else {
+        albumListContent = <AlbumList albums={albums}/>
     }
 
-    if (isError) {
-        console.log({error});
-
-        return <ErrorPage/>
-    }
 
     return (
         <Container>
             <h1>Albums</h1>
-            {isLoading || isFetching ? <LoadingSpinner/> : <AlbumList albums={albums}/> }
-
+            {albumListContent}
         </Container>
     )
 }

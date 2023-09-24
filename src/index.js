@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import store from "./app/store";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Root from "./routes/root";
-import ErrorPage from "./error-page";
+import RouterErrorPage from "./RouterErrorPage";
 import BookInventory from "./components/book/BookInventory";
 import AlbumInventory from "./components/album/AlbumInventory";
 import BookCreate from "./components/book/BookCreate";
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <Root/>,
-        errorElement: <ErrorPage/>,
+        errorElement: <RouterErrorPage/>,
 
         children: [
             {
