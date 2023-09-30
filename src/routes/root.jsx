@@ -15,9 +15,14 @@ export default function Root() {
                             <NavDropdown.Item>New Book</NavDropdown.Item>
                         </LinkContainer>
                     </NavDropdown>
-                    <LinkContainer to="/albums">
-                        <Nav.Link>Albums</Nav.Link>
-                    </LinkContainer>
+                    <NavDropdown title="Albums" id="basic-nav-dropdown">
+                        <LinkContainer to="/albums">
+                            <NavDropdown.Item>List Albums</NavDropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to="/albums/create">
+                            <NavDropdown.Item>New Album</NavDropdown.Item>
+                        </LinkContainer>
+                    </NavDropdown>
                 </Nav>
             </Navbar>
             <div id="detail"><Outlet/></div>

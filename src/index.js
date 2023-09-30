@@ -10,6 +10,7 @@ import RouterErrorPage from "./RouterErrorPage";
 import BookInventory from "./components/book/BookInventory";
 import AlbumInventory from "./components/album/AlbumInventory";
 import BookCreate from "./components/book/BookCreate";
+import AlbumCreate from "./components/album/AlbumCreate";
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
                 path: "albums",
                 element: <AlbumInventory/>,
             },
+            {
+                path: "albums/create",
+                element: <AlbumCreate/>
+            }
         ]
     }
 ]);
