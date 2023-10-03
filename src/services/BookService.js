@@ -4,6 +4,10 @@ const getAll = () => {
     return http.get("/books");
 };
 
+const get = (id) => {
+    return http.get(`/books/${id}`);
+};
+
 const create = title => {
     return http.post("/books", {title});
 };
@@ -26,6 +30,7 @@ const uploadImage = (id, imageFormData) => {
 
 const BookService = {
     getAll,
+    get,
     create,
     remove,
     update,

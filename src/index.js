@@ -11,7 +11,9 @@ import BookInventory from "./components/book/BookInventory";
 import AlbumInventory from "./components/album/AlbumInventory";
 import BookCreate from "./components/book/BookCreate";
 import AlbumCreate from "./components/album/AlbumCreate";
-
+import HomePage from "./components/HomePage";
+import AlbumUpdate from "./components/album/AlbumUpdate";
+import BookUpdate from "./components/book/BookUpdate";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +22,7 @@ const router = createBrowserRouter([
         errorElement: <RouterErrorPage/>,
 
         children: [
+            { path: "", element: <HomePage/> },
             {
                 path: "books",
                 element: <BookInventory/>,
@@ -29,12 +32,20 @@ const router = createBrowserRouter([
                 element: <BookCreate/>,
             },
             {
+                path: "books/update/:id",
+                element: <BookUpdate/>
+            },
+            {
                 path: "albums",
                 element: <AlbumInventory/>,
             },
             {
                 path: "albums/create",
                 element: <AlbumCreate/>
+            },
+            {
+                path: "albums/update/:id",
+                element: <AlbumUpdate/>
             }
         ]
     }

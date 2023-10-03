@@ -1,5 +1,5 @@
 import {Container} from "react-bootstrap";
-import {useGetAlbumsQuery} from "../../services/jsonServerApi";
+import {useGetAlbumsQuery} from "../../services/AlbumApi";
 import AlbumList from "./AlbumList";
 import LoadingSpinner from "../LoadingSpinner";
 import ErrorPage from "../ErrorPage";
@@ -27,7 +27,7 @@ function AlbumInventory() {
 
     return (
         <Container>
-            <h1>Albums</h1>
+            <h1 className="text-center">Albums</h1>
             {albumListContent}
         </Container>
     )

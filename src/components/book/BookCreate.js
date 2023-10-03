@@ -26,18 +26,17 @@ const BookCreate = () => {
       console.log(e);
     });
   }
+
   return (
         <Container>
-
             <Row className="justify-content-md-center">
-
                 <Col className="mx-auto col-10 col-md-8 col-lg-6">
-                    <h1>Add a Book</h1>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="bookTitle">
-                    <Form.Label>Title</Form.Label>
+                    <h1 className="text-center">Add a Book</h1>
+                    <Form onSubmit={handleSubmit}>
+                     <Form.Group className="mb-3" controlId="bookTitle">
+                        <Form.Label>Title</Form.Label>
                     <Form.Control type="text" placeholder="Enter book title" onChange={handleChange} value={title}/>
-                </Form.Group>
+                    </Form.Group>
                 <Button variant="primary" type="submit" >
                     Create
                 </Button>

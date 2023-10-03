@@ -28,7 +28,7 @@ function BookInventory() {
 
     return (
         <Container>
-            <h1>Books</h1>
+            <h1 className="text-center">Books</h1>
             <Row>
                 {bookListContent}
             </Row>
