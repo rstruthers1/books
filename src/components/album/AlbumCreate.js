@@ -9,7 +9,7 @@ const initialFormValues = {
 }
 
 const AlbumCreate = () => {
-    const [formValues, setFormValues] = useState(initialFormValues)
+    const [formValues, setFormValues] = useState(initialFormValues);
     const [createAlbum, { isLoading }] = useCreateAlbumMutation();
 
     const handleChange = (ev) => {

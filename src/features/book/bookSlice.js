@@ -13,8 +13,8 @@ export const fetchBooks = createAsyncThunk(
 
 export const createBook = createAsyncThunk(
     "books/create",
-    async (title) => {
-      const res = await BookService.create(title);
+    async (book) => {
+      const res = await BookService.create(book);
       return res.data;
     }
 );
@@ -29,8 +29,8 @@ export const deleteBook = createAsyncThunk(
 
 export const updateBook = createAsyncThunk(
     "books/update",
-    async ({id, title}) => {
-      const res = await BookService.update(id, title);
+    async (book) => {
+      const res = await BookService.update(book);
       return res.data;
     }
 );
