@@ -8,16 +8,16 @@ const get = (id) => {
     return http.get(`/books/${id}`);
 };
 
-const create = title => {
-    return http.post("/books", {title});
+const create = (book) => {
+    return http.post("/books", book);
 };
 
 const remove = id => {
     return http.delete(`/books/${id}`);
 };
 
-const update = (id, title) => {
-    return http.put(`/books/${id}`, {title: title});
+const update = (book) => {
+    return http.put(`/books/${book.id}`, book);
 };
 
 const uploadImage = (id, imageFormData) => {
