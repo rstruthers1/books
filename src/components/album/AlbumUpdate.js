@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
-import {Col, Container, Form, Row, Image} from "react-bootstrap";
+import {Col, Container, Form, Row, Image, Alert} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {
     useGetAlbumQuery,
     useUpdateAlbumMutation
 } from "../../services/AlbumApi";
 import {useParams} from "react-router-dom";
+import {LinkContainer} from "react-router-bootstrap";
 
 const initialFormValues = {
     name: '',
@@ -16,6 +17,7 @@ const initialFormValues = {
 const AlbumUpdate = () => {
     const [formValues, setFormValues] = useState(initialFormValues)
     const [updateAlbum, {isLoading: isUpdateLoading}] = useUpdateAlbumMutation();
+    const [updateDone, setUpdateDone] = useState(false)
 
     const params = useParams();
 
@@ -48,7 +50,10 @@ const AlbumUpdate = () => {
 
     function handleSubmit(ev) {
         ev.preventDefault();
-        updateAlbum(formValues);
+        updateAlbum(formValues).unwrap()
+            .then((data) => {
+                setUpdateDone(true)
+            });
     }
 
     return (
@@ -74,6 +79,18 @@ const AlbumUpdate = () => {
                         </Button>
                         {isLoading && ' Loading...'}
                     </Form>
+                </Col>
+            </Row>
+            <Row className="justify-content-md-center" style={{marginTop: "20px"}}>
+                <Col className="mx-auto col-10 col-md-8 col-lg-6">
+                    <LinkContainer to="/albums">
+                        <a> Back to list</a>
+                    </LinkContainer>
+                </Col>
+            </Row>
+            <Row className="justify-content-md-center" style={{marginTop: "20px"}}>
+                <Col className="mx-auto col-10 col-md-8 col-lg-6">
+                    {updateDone && <Alert variant='success'>Album updated successfully.</Alert>}
                 </Col>
             </Row>
         </Container>

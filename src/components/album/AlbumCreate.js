@@ -1,7 +1,8 @@
 import {useState} from "react";
-import {Col, Container, Form, Row} from "react-bootstrap";
+import {Alert, Col, Container, Form, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useCreateAlbumMutation} from "../../services/AlbumApi";
+import {LinkContainer} from "react-router-bootstrap";
 
 const initialFormValues = {
     name: '',
@@ -11,6 +12,7 @@ const initialFormValues = {
 const AlbumCreate = () => {
     const [formValues, setFormValues] = useState(initialFormValues);
     const [createAlbum, { isLoading }] = useCreateAlbumMutation();
+    const [createDone, setCreateDone] = useState(false)
 
     const handleChange = (ev) => {
         const target = ev.currentTarget
@@ -25,8 +27,10 @@ const AlbumCreate = () => {
 
     function handleSubmit(ev) {
         ev.preventDefault();
-        createAlbum(formValues);
-        setFormValues(initialFormValues)
+        createAlbum(formValues).unwrap()
+            .then((data) => {
+                setCreateDone(true)
+            });
     }
 
     return (
@@ -39,19 +43,33 @@ const AlbumCreate = () => {
                             <Form.Label>Name</Form.Label>
                             <Form.Control type="text" placeholder="Enter an album name" onChange={handleChange}
                                           name="name"
+                                          disabled={createDone}
                                           value={formValues.name}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="artist">
                             <Form.Label>Artist</Form.Label>
                             <Form.Control type="text" placeholder="Enter an artist" onChange={handleChange}
                                           name="artist"
+                                          disabled={createDone}
                                           value={formValues.artist}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit" disabled={isLoading}>
+                        <Button variant="primary" type="submit" disabled={isLoading || createDone}>
                             Create
                         </Button>
                         {isLoading && ' Loading...'}
                     </Form>
+                </Col>
+            </Row>
+            <Row className="justify-content-md-center" style={{marginTop: "20px"}}>
+                <Col className="mx-auto col-10 col-md-8 col-lg-6">
+                    <LinkContainer to="/albums">
+                        <a> Back to list</a>
+                    </LinkContainer>
+                </Col>
+            </Row>
+            <Row className="justify-content-md-center" style={{marginTop: "20px"}}>
+                <Col className="mx-auto col-10 col-md-8 col-lg-6">
+                    {createDone && <Alert variant='success'>Album created successfully.</Alert>}
                 </Col>
             </Row>
         </Container>
