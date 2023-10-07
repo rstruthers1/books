@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Col, Container, Form, Row, Image} from "react-bootstrap";
+import {Col, Container, Form, Row, Image, Alert} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,6 +8,7 @@ import {
     getBookLoading
 } from "../../features/oneBook/oneBookSlice";
 import {updateBook} from "../../features/book/bookSlice";
+import {LinkContainer} from "react-router-bootstrap";
 
 const initialFormValues = {
     title: '',
@@ -16,6 +17,7 @@ const initialFormValues = {
 
 const BookUpdate = () => {
     const [formValues, setFormValues] = useState(initialFormValues)
+    const [updateDone, setUpdateDone] = useState(false)
     const params = useParams();
     const dispatch = useDispatch();
 
@@ -27,6 +29,7 @@ const BookUpdate = () => {
             .then(response => {
                 console.log(response);
                 setFormValues({...response})
+
             })
             .catch(e => {
                 console.log(e);
@@ -34,9 +37,6 @@ const BookUpdate = () => {
 
     }, [params.id]);
 
-    useEffect(() => {
-        console.log(`**** loading: ${loading}`)
-    }, [loading]);
 
     const handleChange = (ev) => {
         const target = ev.currentTarget
@@ -54,7 +54,7 @@ const BookUpdate = () => {
         dispatch(updateBook(formValues))
             .unwrap()
             .then(response => {
-                console.log(response);
+                setUpdateDone(true)
             })
             .catch(e => {
                 console.log(e);
@@ -85,6 +85,18 @@ const BookUpdate = () => {
                         </Button>
                         </Form>) : <div>Loading...</div>
 }
+                </Col>
+            </Row>
+            <Row className="justify-content-md-center" style={{marginTop: "20px"}}>
+                <Col className="mx-auto col-10 col-md-8 col-lg-6">
+                    <LinkContainer to="/books">
+                        <a> Back to list</a>
+                    </LinkContainer>
+                </Col>
+            </Row>
+            <Row className="justify-content-md-center" style={{marginTop: "20px"}}>
+                <Col className="mx-auto col-10 col-md-8 col-lg-6">
+                    {updateDone && <Alert variant='success'>Book updated successfully.</Alert>}
                 </Col>
             </Row>
         </Container>
