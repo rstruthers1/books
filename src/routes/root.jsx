@@ -29,6 +29,14 @@ export default function Root() {
                             <NavDropdown.Item>New Album</NavDropdown.Item>
                         </LinkContainer>
                     </NavDropdown>
+                    <NavDropdown title="Videos" id="basic-nav-dropdown">
+                        <LinkContainer to="/videos">
+                            <NavDropdown.Item>List Videos</NavDropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to="/videos/create">
+                            <NavDropdown.Item>New Video</NavDropdown.Item>
+                        </LinkContainer>
+                    </NavDropdown>
                 </Nav>
             </Navbar>
             <div id="detail"><Outlet/></div>
