@@ -72,3 +72,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## References
 * https://dev.to/raaynaldo/rtk-query-tutorial-crud-51hl
+* https://github.com/reduxjs/redux/tree/master/examples/todos
+* 

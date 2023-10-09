@@ -14,6 +14,7 @@ import AlbumCreate from "./components/album/AlbumCreate";
 import HomePage from "./components/HomePage";
 import AlbumUpdate from "./components/album/AlbumUpdate";
 import BookUpdate from "./components/book/BookUpdate";
+import VideoInventory from "./components/video/VideoInventory";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: "albums/update/:id",
                 element: <AlbumUpdate/>
+            },
+            {
+                path: "videos",
+                element: <VideoInventory/>,
             }
         ]
     }
